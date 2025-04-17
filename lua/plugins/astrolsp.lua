@@ -1,4 +1,4 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+-- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
@@ -14,13 +14,13 @@ return {
     features = {
       codelens = true, -- enable/disable codelens refresh on start
       inlay_hints = false, -- enable/disable inlay hints on start
-      semantic_tokens = true, -- enable/disable semantic token highlighting
+      semantic_tokens = false, -- enable/disable semantic token highlighting // causes issues with typst_lsp
     },
     -- customize lsp formatting options
     formatting = {
       -- control auto formatting on save
       format_on_save = {
-        enabled = true, -- enable or disable format on save globally
+        enabled = false, -- enable or disable format on save globally
         allow_filetypes = { -- enable format on save for specified filetypes only
           -- "go",
         },
@@ -78,6 +78,7 @@ return {
       },
     },
     -- mappings to be set up on attaching of a language server
+    -- See examples in https://docs.astronvim.com/recipes/mappings/#add-custom-mappings
     mappings = {
       n = {
         -- a `cond` key can provided as the string of a server capability to be required to attach, or a function with `client` and `bufnr` parameters from the `on_attach` that returns a boolean
@@ -86,6 +87,21 @@ return {
           desc = "Declaration of current symbol",
           cond = "textDocument/declaration",
         },
+        -- ADDED MY ME
+        K = {
+          function() vim.lsp.buf.hover() end,
+          desc = "Hover symbol details",
+          cond = "textDocument/hover",
+        },
+        H = {
+          function() vim.lsp.buf.signature_help() end,
+          desc = "Signature help",
+          cond = "textDocument/signatureHelp",
+        },
+        -- ["<Leader>lg"] = {
+        --   function() require("telescope.builtin").lsp_workspace_symbols() end,
+        --   desc = "List workspace symbols",
+        -- },
         ["<Leader>uY"] = {
           function() require("astrolsp.toggles").buffer_semantic_tokens() end,
           desc = "Toggle LSP semantic highlight (buffer)",
