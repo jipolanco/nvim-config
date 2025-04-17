@@ -1,0 +1,10 @@
+{
+  "Documentation block": {
+    "prefix": "doc",
+    "body": [
+      "\"\"\"",
+      "\t$0",
+      "\"\"\""
+    ]
+  }
+}
