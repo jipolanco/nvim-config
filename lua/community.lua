@@ -10,5 +10,8 @@ return {
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.typst" },
   { import = "astrocommunity.pack.julia" },
+  { import = "astrocommunity.pack.fish" },
   { import = "astrocommunity.editing-support.conform-nvim" },
+  { import = "astrocommunity.markdown-and-latex.vimtex" },
+  { import = "astrocommunity.motion.nvim-surround" },
 }

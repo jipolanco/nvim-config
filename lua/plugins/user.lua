@@ -62,29 +62,58 @@ return {
 
   -- https://github.com/stevearc/conform.nvim
   -- https://github.com/fredrikekre/Runic.jl?tab=readme-ov-file#neovim
-  -- TODO: adapt this for astrocommunity
-  -- {
-  --   "stevearc/conform.nvim",
-  --   ft = {"julia"},
-  --   config = function()
-  --     require("conform").setup({
-  --       formatters = {
-  --         runic = {
-  --           command = "julia",
-  --           args = {"--project=@runic", "--startup-file=no", "-e", "using Runic; exit(Runic.main(ARGS))", "--", "-"},
-  --         },
-  --       },
-  --       formatters_by_ft = {
-  --         julia = {"runic"},
-  --       },
-  --       default_format_opts = {
-  --         -- Increase the timeout in case Runic needs to precompile
-  --         -- (e.g. after upgrading Julia and/or Runic).
-  --         timeout_ms = 20000,
-  --       },
-  --     })
-  --   end,
-  -- },
+  {
+    "stevearc/conform.nvim",
+    ft = {"julia"},
+    config = function()
+      require("conform").setup({
+        -- Map of filetype to formatters
+        formatters_by_ft = {
+          julia = {"runic"},
+        },
+        formatters = {
+          runic = {
+            command = "julia",
+            args = function(self, ctx)
+              return {"--project=@runic", "--startup-file=no", "-e", "using Runic; exit(Runic.main(ARGS))", "--", "-"}
+            end,
+            range_args = function(self, ctx)
+              local lines = "--lines=" .. ctx.range.start[1] .. ":" .. ctx.range["end"][1]
+              return {"--project=@runic", "--startup-file=no", "-e", "using Runic; exit(Runic.main(ARGS))", "--", lines, "-"}
+            end
+          },
+        },
+        default_format_opts = {
+          -- Increase the timeout in case Runic needs to precompile
+          -- (e.g. after upgrading Julia and/or Runic).
+          timeout_ms = 20000,
+        },
+      })
+    end,
+  },
+
+  {
+    "lervag/vimtex",
+    ft = "tex",
+    config = function()
+      vim.g.vimtex_view_method = "general"
+      vim.g.vimtex_view_general_viewer = "okular"
+      vim.g.vimtex_view_general_options = "--unique file:@pdf#src:@line@tex"
+      vim.g.vimtex_quickfix_open_on_warning = 0
+      vim.g.vimtex_fold_manual = 1
+    end,
+  },
+
+  {
+    "jpalardy/vim-slime",
+    lazy = false,
+    config = function()
+      vim.g.slime_target = "tmux"
+      vim.g.slime_default_config = { socket_name = "default", target_pane = "{last}" }
+      vim.g.slime_paste_file = vim.call("tempname")
+      vim.g.slime_bracketed_paste = 1
+    end,
+  },
 
   {
     "windwp/nvim-autopairs",
