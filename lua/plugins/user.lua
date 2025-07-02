@@ -70,6 +70,7 @@ return {
         -- Map of filetype to formatters
         formatters_by_ft = {
           julia = {"runic"},
+          typst = {"typstyle"},
         },
         formatters = {
           runic = {
@@ -87,6 +88,7 @@ return {
           -- Increase the timeout in case Runic needs to precompile
           -- (e.g. after upgrading Julia and/or Runic).
           timeout_ms = 20000,
+          lsp_format = "fallback", -- use LSP formatter as a fallback
         },
       })
     end,
@@ -114,6 +116,23 @@ return {
       vim.g.slime_bracketed_paste = 1
     end,
   },
+
+  -- {
+  --   "Saghen/blink.cmp",
+  --   opts = {
+  --     cmdline = {
+  --       enabled = true,
+  --       keymap = { preset = 'inherit' },
+  --       completion = { menu = { auto_show = true } },
+  --     },
+  --     sources = {
+  --       providers = {
+  --         cmdline = {
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 
   {
     "windwp/nvim-autopairs",

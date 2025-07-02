@@ -14,7 +14,7 @@ return {
     features = {
       codelens = true, -- enable/disable codelens refresh on start
       inlay_hints = false, -- enable/disable inlay hints on start
-      semantic_tokens = false, -- enable/disable semantic token highlighting // causes issues with typst_lsp
+      semantic_tokens = true, -- enable/disable semantic token highlighting
     },
     -- customize lsp formatting options
     formatting = {
@@ -45,6 +45,41 @@ return {
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      tinymist = {
+        settings = {
+          projectResolution = "singleFile",  -- singleFile | lockDatabase
+          formatterMode = "typstyle",  -- typstyle
+          exportPdf = "onSave", -- never | onSave | onType
+        }
+      },
+      julials = {
+        -- Adapted from https://github.com/mehalter/.julia
+        on_new_config = function(new_config)
+          -- check for nvim-lspconfig julia sysimage shim
+          local julia = (vim.env.JULIA_DEPOT_PATH or vim.fn.expand "~/.julia")
+            .. "/environments/nvim-lspconfig/bin/julia"
+          -- if require("lspconfig").util.path.is_file(julia) then
+          -- Lua Diagnostics.: Deprecated.(use `(vim.uv.fs_stat(path) or {}).type == 'file'` instead) [deprecated]
+          if (vim.uv.fs_stat(julia) or {}).type == 'file' then
+            new_config.cmd[1] = julia
+          end
+        end,
+        -- recommended default settings used by Julia VS Code extension
+        settings = {
+          julia = {
+            completionmode = "qualify",
+            lint = {
+              missingrefs = "none",
+            },
+            inlayHints = {
+              static = {
+                enabled = false,
+                variableTypes = { enabled = true },
+              },
+            },
+          },
+        },
+      },
     },
     -- customize how language servers are attached
     handlers = {
@@ -92,11 +127,6 @@ return {
           function() vim.lsp.buf.hover() end,
           desc = "Hover symbol details",
           cond = "textDocument/hover",
-        },
-        H = {
-          function() vim.lsp.buf.signature_help() end,
-          desc = "Signature help",
-          cond = "textDocument/signatureHelp",
         },
         -- ["<Leader>lg"] = {
         --   function() require("telescope.builtin").lsp_workspace_symbols() end,

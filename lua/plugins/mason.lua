@@ -12,13 +12,17 @@ return {
       -- Make sure to use the names found in `:Mason`
       ensure_installed = {
         -- install language servers
+        "bash-language-server",
+        "julia-lsp",
         "lua-language-server",
+        "tinymist",  -- typst
 
         -- install formatters
-        "stylua",
+        "stylua", -- used via conform.nvim
+        -- "typstyle",
 
         -- install debuggers
-        "debugpy",
+        -- "debugpy",
 
         -- install any other package
         "tree-sitter-cli",
