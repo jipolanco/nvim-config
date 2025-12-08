@@ -11,9 +11,11 @@ return {
   { import = "astrocommunity.pack.typst" },
   { import = "astrocommunity.pack.julia" },
   { import = "astrocommunity.pack.fish" },
+  -- { import = "astrocommunity.pack.quarto" },
   { import = "astrocommunity.editing-support.conform-nvim" },
   { import = "astrocommunity.markdown-and-latex.vimtex" },
   { import = "astrocommunity.motion.nvim-surround" },
   -- { import = "astrocommunity.completion.blink-cmp-git" }
+  { import = "astrocommunity.git.neogit" },
   { import = "astrocommunity.git.diffview-nvim" },
 }
