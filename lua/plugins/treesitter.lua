@@ -19,7 +19,7 @@ return {
     highlight = {
       enable = true,
       disable = {
-        "julia",
+        -- "julia",
         "latex",
       },
     },
