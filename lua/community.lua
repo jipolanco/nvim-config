@@ -11,6 +11,7 @@ return {
   { import = "astrocommunity.pack.typst" },
   { import = "astrocommunity.pack.julia" },
   { import = "astrocommunity.pack.fish" },
+  { import = "astrocommunity.pack.rust" },
   -- { import = "astrocommunity.pack.quarto" },
   { import = "astrocommunity.editing-support.conform-nvim" },
   { import = "astrocommunity.markdown-and-latex.vimtex" },

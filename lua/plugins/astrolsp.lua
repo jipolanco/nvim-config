@@ -47,9 +47,15 @@ return {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
       tinymist = {
         settings = {
-          projectResolution = "singleFile",  -- singleFile | lockDatabase
+          projectResolution = "lockDatabase",  -- singleFile | lockDatabase
           formatterMode = "typstyle",  -- typstyle
-          exportPdf = "onSave", -- never | onSave | onType
+          -- The typst version used by tinymist may be slightly updated.
+          -- To compile source files, we can use :TypstCompile to use typst binaries in $PATH instead
+          -- of the version included in tinymist.
+          exportPdf = "never", -- never | onSave | onType
+          lint = {
+            enabled = true,
+          }
         }
       },
       julials = {
