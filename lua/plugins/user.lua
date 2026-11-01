@@ -9,12 +9,12 @@ return {
 
   -- == Examples of Adding Plugins ==
 
-  -- "andweeb/presence.nvim",
-  -- {
-  --   "ray-x/lsp_signature.nvim",
-  --   event = "BufRead",
-  --   config = function() require("lsp_signature").setup() end,
-  -- },
+  "andweeb/presence.nvim",
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "BufRead",
+    config = function() require("lsp_signature").setup() end,
+  },
 
   -- == Examples of Overriding Plugins ==
 
@@ -45,6 +45,16 @@ return {
   -- You can disable default plugins as follows:
   -- { "max397574/better-escape.nvim", enabled = false },
 
+  -- https://github.com/RRethy/vim-illuminate/issues/247
+  { "RRethy/vim-illuminate", enabled = false },
+
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   -- branch = "master",
+  --   commit = "98e5981d14057a54cd49a35fb280dfd275ff65f8", -- includes updated julials (18/09/2026) -- we need version > v2.11.0
+  --   lazy = false,
+  -- },
+
   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
   {
     "L3MON4D3/LuaSnip",
@@ -72,18 +82,18 @@ return {
           julia = {"runic"},
           typst = {"typstyle"},
         },
-        formatters = {
-          runic = {
-            command = "julia",
-            args = function(self, ctx)
-              return {"--project=@runic", "--startup-file=no", "-e", "using Runic; exit(Runic.main(ARGS))", "--", "-"}
-            end,
-            range_args = function(self, ctx)
-              local lines = "--lines=" .. ctx.range.start[1] .. ":" .. ctx.range["end"][1]
-              return {"--project=@runic", "--startup-file=no", "-e", "using Runic; exit(Runic.main(ARGS))", "--", lines, "-"}
-            end
-          },
-        },
+        -- formatters = {
+        --   runic = {
+        --     command = "julia",
+        --     args = function(self, ctx)
+        --       return {"--project=@runic", "--startup-file=no", "-e", "using Runic; exit(Runic.main(ARGS))", "--", "-"}
+        --     end,
+        --     range_args = function(self, ctx)
+        --       local lines = "--lines=" .. ctx.range.start[1] .. ":" .. ctx.range["end"][1]
+        --       return {"--project=@runic", "--startup-file=no", "-e", "using Runic; exit(Runic.main(ARGS))", "--", lines, "-"}
+        --     end
+        --   },
+        -- },
         default_format_opts = {
           -- Increase the timeout in case Runic needs to precompile
           -- (e.g. after upgrading Julia and/or Runic).
@@ -95,12 +105,31 @@ return {
   },
 
   {
+    'stevearc/aerial.nvim',
+    config = function()
+      require("aerial").setup({
+        backends = {
+          -- "treesitter",  -- has issues in nvim 0.12? (only with Julia?)
+          "lsp", "markdown", "asciidoc", "man" },
+      })
+    end,
+  },
+
+  -- {
+  --   'neovim-treesitter/nvim-treesitter',
+  --   branch = "main",
+  --   dependencies = { 'neovim-treesitter/treesitter-parser-registry' },
+  --   lazy = false,
+  --   build = ':TSUpdate',
+  -- },
+
+  {
     "lervag/vimtex",
     ft = "tex",
     config = function()
-      vim.g.vimtex_view_method = "general"
-      vim.g.vimtex_view_general_viewer = "okular"
-      vim.g.vimtex_view_general_options = "--unique file:@pdf#src:@line@tex"
+      -- vim.g.vimtex_view_method = "general"
+      -- vim.g.vimtex_view_general_viewer = "okular"
+      -- vim.g.vimtex_view_general_options = "--unique file:@pdf#src:@line@tex"
       vim.g.vimtex_quickfix_open_on_warning = 0
       vim.g.vimtex_fold_manual = 1
     end,
@@ -168,5 +197,9 @@ return {
     "esmuellert/codediff.nvim",
     dependencies = { "MunifTanjim/nui.nvim" },
     cmd = "CodeDiff",
+  },
+
+  {
+
   }
 }

@@ -13,7 +13,7 @@ return {
       ensure_installed = {
         -- install language servers
         "bash-language-server",
-        "julia-lsp",
+        -- "julia-lsp",
         "lua-language-server",
         "tinymist",  -- typst
 
@@ -25,7 +25,7 @@ return {
         -- "debugpy",
 
         -- install any other package
-        "tree-sitter-cli",
+        -- "tree-sitter-cli",
       },
     },
   },

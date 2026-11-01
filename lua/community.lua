@@ -14,7 +14,7 @@ return {
   { import = "astrocommunity.pack.rust" },
   -- { import = "astrocommunity.pack.quarto" },
   { import = "astrocommunity.editing-support.conform-nvim" },
-  { import = "astrocommunity.markdown-and-latex.vimtex" },
+  -- { import = "astrocommunity.markdown-and-latex.vimtex" },  -- note: loads old nvim-treesitter
   { import = "astrocommunity.motion.nvim-surround" },
   -- { import = "astrocommunity.completion.blink-cmp-git" }
   { import = "astrocommunity.git.neogit" },
